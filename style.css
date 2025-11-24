@@ -54,3 +54,19 @@ footer {
   background-color: #0c0c0f;
   color: #888;
 }
+.log-feed {
+  margin: 2rem auto;
+  padding: 1rem;
+  width: 90%;
+  max-width: 800px;
+  background: #121417;
+  border-radius: 6px;
+  color: #fff;
+  font-family: monospace;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.log-entry {
+  padding: 0.5rem;
+  border-bottom: 1px solid #333;
+}

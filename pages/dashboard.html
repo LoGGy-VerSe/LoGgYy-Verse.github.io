@@ -8,5 +8,34 @@
 <body>
   <h1>🔍 Live Dashboard</h1>
   <p>This will host your live AI logs, system monitors, and WhisperWall status.</p>
+  <div id="log-container" class="log-feed"></div>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDSH45hEQ9fy__MWNA6_MxKzASu5tiVG_k",
+      authDomain: "loggy-verse.firebaseapp.com",
+      projectId: "loggy-verse",
+      storageBucket: "loggy-verse.firebasestorage.app",
+      messagingSenderId: "1063242258988",
+      appId: "1:1063242258988:web:06c1ea43fc3147b10e8f89"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    db.ref("logs").on("value", snapshot => {
+      const logs = snapshot.val();
+      const container = document.getElementById("log-container");
+      container.innerHTML = '';
+      if (logs) {
+        Object.values(logs).forEach(log => {
+          const div = document.createElement("div");
+          div.className = "log-entry";
+          div.textContent = log.message || JSON.stringify(log);
+          container.appendChild(div);
+        });
+      }
+    });
+  </script>
 </body>
 </html>
