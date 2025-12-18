@@ -11,30 +11,88 @@
   <header class="hero">
     <img src="assets/logo.png" alt="LoggyVerse Logo" class="logo" />
     <h1>Welcome to Loggy Verse</h1>
-    <p>The Future of Autonomous AI Logging Begins Here</p>
-    <a href="pages/dashboard.html" class="cta-btn">Enter Dashboard</a>
+    <p class="tagline">The Future of Autonomous AI Logging Begins Here</p>
+    <p class="subtitle">Because your logs deserve better than <code>console.log("it works lol")</code> 🤦</p>
+    <div class="cta-group">
+      <a href="pages/dashboard.html" class="cta-btn">Enter Dashboard</a>
+      <a href="pages/features.html" class="cta-btn cta-secondary">See 2500+ Features*</a>
+    </div>
+    <p class="fine-print">*We counted them. Yes, really. Okay, maybe we got a little creative with the counting... 😏</p>
   </header>
 
   <section class="features">
-    <div class="feature-card">
+    <div class="feature-card" data-tooltip="No more digging through grep like it's 1995!">
       <img src="assets/icons/ai.svg" />
-      <h3>AI Log Intelligence</h3>
+      <h3>🧠 AI Log Intelligence</h3>
       <p>Scan, detect, report—all automated by Loggy Agents.</p>
+      <p class="feature-humor">Finally, an AI that actually <em>wants</em> to read your error messages!</p>
     </div>
-    <div class="feature-card">
+    <div class="feature-card" data-tooltip="Everything's on fire? Now you can WATCH it burn in real-time!">
       <img src="assets/icons/dashboard.svg" />
-      <h3>Real-time Dashboards</h3>
+      <h3>📊 Real-time Dashboards</h3>
       <p>Visualize issues across all systems live and react instantly.</p>
+      <p class="feature-humor">Because watching numbers go up (or down) is strangely satisfying 📈</p>
     </div>
-    <div class="feature-card">
+    <div class="feature-card" data-tooltip="It's like Pokemon, but for debugging tools">
       <img src="assets/icons/agent.svg" />
-      <h3>Agent Portal</h3>
+      <h3>🤖 Agent Portal</h3>
       <p>Command, clone, or upgrade your Loggy AI swarm anytime.</p>
+      <p class="feature-humor">Gotta catch 'em all! (The bugs, not the agents... or both?)</p>
+    </div>
+  </section>
+
+  <section class="why-loggy">
+    <h2>Why LoggyVerse? 🤔</h2>
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="emoji">😴</span>
+        <h4>Tired of Log Spelunking?</h4>
+        <p>Let our AI agents do the dirty work while you sip your coffee ☕</p>
+      </div>
+      <div class="why-item">
+        <span class="emoji">🔥</span>
+        <h4>Production on Fire?</h4>
+        <p>We'll tell you before your users do (and probably before you finish lunch)</p>
+      </div>
+      <div class="why-item">
+        <span class="emoji">🎯</span>
+        <h4>Needle in a Haystack?</h4>
+        <p>Our AI has X-ray vision for logs. No needle stands a chance.</p>
+      </div>
+      <div class="why-item">
+        <span class="emoji">🚀</span>
+        <h4>Scale Without Panic</h4>
+        <p>From 100 to 1M logs/sec. We got you. (Yes, we tested it.)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <h2>What Developers Are Saying 💬</h2>
+    <div class="testimonial-grid">
+      <blockquote class="testimonial">
+        <p>"I haven't manually grepped a log file in 3 months. I'm... I'm free!"</p>
+        <cite>— Senior Dev Who Finally Has Work-Life Balance</cite>
+      </blockquote>
+      <blockquote class="testimonial">
+        <p>"LoggyVerse found a bug I didn't even know I wrote. Scary. But useful."</p>
+        <cite>— Backend Engineer (Slightly Paranoid Now)</cite>
+      </blockquote>
+      <blockquote class="testimonial">
+        <p>"The AI agents are so good, I'm starting to feel obsolete... wait—"</p>
+        <cite>— DevOps Lead (Currently Updating Resume)</cite>
+      </blockquote>
     </div>
   </section>
 
   <footer>
     <p>&copy; 2025 LoggyVerse. Powered by BriBri Tech.</p>
+    <p class="footer-humor">No logs were harmed in the making of this website. Okay, maybe a few. 🪵</p>
+    <p class="footer-links">
+      <a href="#" onclick="showEasterEgg(); return false;">🥚 Secret</a> | 
+      <a href="pages/features.html">Features</a> | 
+      <a href="pages/dashboard.html">Dashboard</a>
+    </p>
   </footer>
 </body>
 </html>

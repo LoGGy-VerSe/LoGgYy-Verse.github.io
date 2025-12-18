@@ -2,13 +2,120 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>LoggyVerse Dashboard</title>
+  <title>LoggyVerse Dashboard - Where Logs Come to Life</title>
   <link rel="stylesheet" href="../style.css" />
+  <style>
+    body {
+      padding: 2rem;
+    }
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .dashboard-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .status-bar {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    .status-item {
+      background: #2c2f35;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      min-width: 150px;
+      text-align: center;
+    }
+    .status-item .label {
+      color: #888;
+      font-size: 0.9rem;
+    }
+    .status-item .value {
+      color: #00ff88;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .log-controls {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .log-controls button {
+      background: #00ff88;
+      color: #000;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      margin: 0.5rem;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .log-controls button:hover {
+      background: #00cc66;
+      transform: translateY(-2px);
+    }
+    .fun-fact {
+      text-align: center;
+      padding: 1rem;
+      background: #1a1c22;
+      border-radius: 8px;
+      margin: 2rem auto;
+      max-width: 600px;
+      font-style: italic;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
-  <h1>🔍 Live Dashboard</h1>
-  <p>This will host your live AI logs, system monitors, and WhisperWall status.</p>
+  <div class="dashboard-header">
+    <h1>🔍 Live Dashboard</h1>
+    <p>Real-time AI Log Intelligence - Now with 87% more intelligence! 🧠</p>
+    <p style="color: #666; font-size: 0.9rem; margin-top: 0.5rem;">
+      (The other 13% went to making these witty tooltips)
+    </p>
+  </div>
+
+  <div class="status-bar">
+    <div class="status-item">
+      <div class="label">Active Agents</div>
+      <div class="value" id="agentCount">42</div>
+    </div>
+    <div class="status-item">
+      <div class="label">Logs/Second</div>
+      <div class="value" id="logRate">1,337</div>
+    </div>
+    <div class="status-item">
+      <div class="label">Bugs Found</div>
+      <div class="value" id="bugCount">404</div>
+    </div>
+    <div class="status-item">
+      <div class="label">System Health</div>
+      <div class="value" id="health" style="color: #00ff88;">98%</div>
+    </div>
+  </div>
+
+  <div class="log-controls">
+    <button onclick="addFunLog()">🎲 Generate Fun Log</button>
+    <button onclick="clearLogs()">🧹 Clear Logs</button>
+    <button onclick="toggleLiveMode()">⏸️ <span id="toggleText">Pause</span> Live Feed</button>
+  </div>
+
+  <div class="fun-fact" id="funFact">
+    💡 Loading interesting fact...
+  </div>
+
   <div id="log-container" class="log-feed"></div>
+
+  <div style="text-align: center; margin-top: 2rem;">
+    <a href="../index.html" style="color: #00ff88; text-decoration: none;">← Back to Home</a>
+    <span style="margin: 0 1rem; color: #666;">|</span>
+    <a href="features.html" style="color: #00ccff; text-decoration: none;">See All Features →</a>
+  </div>
+
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -23,12 +130,97 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
+    
+    let liveMode = true;
+    let logCount = 0;
+    
+    // Fun facts rotation
+    const funFacts = [
+      "💡 Did you know? The average developer checks logs 47 times a day. You're already at " + Math.floor(Math.random() * 50) + "!",
+      "🎯 Fun fact: 60% of bugs are found after you go home for the day.",
+      "🤖 Our AI agents never sleep. Unlike you (you should fix that).",
+      "📊 Statistically, this dashboard is 73% cooler than your last one.",
+      "🔮 Prediction: You'll find exactly 3 bugs today. Two will be from last week.",
+      "🎪 Plot twist: The real bugs were the friends we made along the way.",
+      "🧠 Brain fact: Reading logs is proven to increase debugging skills by 0.3%.",
+      "☕ Coffee consumption correlates strongly with log viewing. Science!",
+      "🎮 Achievement unlocked: Dashboard Viewer! +10 DevOps XP",
+      "🌟 You're doing great! Keep up the log monitoring!"
+    ];
+    
+    function rotateFunFact() {
+      const factEl = document.getElementById('funFact');
+      factEl.textContent = funFacts[Math.floor(Math.random() * funFacts.length)];
+    }
+    
+    rotateFunFact();
+    setInterval(rotateFunFact, 10000);
+    
+    // Funny log messages
+    const funnyLogs = [
+      { level: "INFO", message: "🎉 All systems operational! (Surprisingly)" },
+      { level: "WARN", message: "⚠️ Server #3 is running suspiciously well... investigating" },
+      { level: "ERROR", message: "❌ 404: Motivation not found. Restarting..." },
+      { level: "INFO", message: "✨ Database queries completed in 0.03ms (Show off!)" },
+      { level: "DEBUG", message: "🔍 Searching for bugs... Found Dave's commented-out code from 2019" },
+      { level: "WARN", message: "⚡ CPU usage at 100%. Probably mining crypto again..." },
+      { level: "INFO", message: "🎯 Cache hit rate: 99.9%. We're basically wizards." },
+      { level: "ERROR", message: "💥 Null pointer exception. Classic." },
+      { level: "INFO", message: "🚀 Deployment successful! Nobody panic." },
+      { level: "WARN", message: "🌡️ Server temperature rising. It's getting hot in here!" },
+      { level: "DEBUG", message: "🧪 Running tests... All passed! (Except that one we ignore)" },
+      { level: "INFO", message: "📬 Email sent successfully. Unlike last time." },
+      { level: "ERROR", message: "🔥 Exception caught! Good catch, error handler!" },
+      { level: "WARN", message: "⏰ Scheduled job ran 3 hours late. Traffic was bad." },
+      { level: "INFO", message: "🎨 UI rendered perfectly. Designers will be pleased!" },
+      { level: "DEBUG", message: "🔐 Authentication successful. Welcome back, human!" },
+      { level: "ERROR", message: "💔 Connection refused. It's not you, it's the firewall." },
+      { level: "INFO", message: "📊 Analytics processed: Users clicked button 1,337 times today" },
+      { level: "WARN", message: "🎪 Memory leak detected. Should probably fix that... eventually." },
+      { level: "INFO", message: "✅ Backup completed. Your data is safe! (Probably)" }
+    ];
+    
+    function addFunLog() {
+      const log = funnyLogs[Math.floor(Math.random() * funnyLogs.length)];
+      const container = document.getElementById("log-container");
+      const div = document.createElement("div");
+      div.className = "log-entry log-" + log.level.toLowerCase();
+      div.innerHTML = `<strong>[${log.level}]</strong> ${new Date().toLocaleTimeString()} - ${log.message}`;
+      container.insertBefore(div, container.firstChild);
+      logCount++;
+      
+      // Limit to 50 logs
+      while (container.children.length > 50) {
+        container.removeChild(container.lastChild);
+      }
+    }
+    
+    function clearLogs() {
+      document.getElementById("log-container").innerHTML = '';
+      logCount = 0;
+      console.log("🧹 Logs cleared! Fresh start!");
+    }
+    
+    function toggleLiveMode() {
+      liveMode = !liveMode;
+      const toggleText = document.getElementById('toggleText');
+      toggleText.textContent = liveMode ? 'Pause' : 'Resume';
+      console.log(liveMode ? "▶️ Live mode resumed" : "⏸️ Live mode paused");
+    }
+    
+    // Firebase listener
     db.ref("logs").on("value", snapshot => {
+      if (!liveMode) return;
+      
       const logs = snapshot.val();
       const container = document.getElementById("log-container");
-      container.innerHTML = '';
+      
       if (logs) {
-        Object.values(logs).forEach(log => {
+        // Clear and repopulate
+        container.innerHTML = '';
+        const logArray = Object.values(logs).slice(-50); // Last 50 logs
+        
+        logArray.reverse().forEach(log => {
           const div = document.createElement("div");
           div.className = "log-entry";
           div.textContent = log.message || JSON.stringify(log);
@@ -36,6 +228,45 @@
         });
       }
     });
+    
+    // Simulate live metrics
+    function updateMetrics() {
+      const agentCount = document.getElementById('agentCount');
+      const logRate = document.getElementById('logRate');
+      const bugCount = document.getElementById('bugCount');
+      const health = document.getElementById('health');
+      
+      // Randomly fluctuate values for fun
+      agentCount.textContent = Math.floor(40 + Math.random() * 10);
+      logRate.textContent = (1200 + Math.floor(Math.random() * 300)).toLocaleString();
+      
+      const bugs = parseInt(bugCount.textContent);
+      bugCount.textContent = bugs === 404 ? bugs : Math.floor(400 + Math.random() * 10);
+      
+      const healthVal = 95 + Math.floor(Math.random() * 5);
+      health.textContent = healthVal + '%';
+      health.style.color = healthVal >= 98 ? '#00ff88' : healthVal >= 95 ? '#ffaa00' : '#ff6b6b';
+    }
+    
+    setInterval(updateMetrics, 3000);
+    
+    // Auto-add fun logs occasionally
+    setInterval(() => {
+      if (liveMode && Math.random() > 0.7) {
+        addFunLog();
+      }
+    }, 5000);
+    
+    // Console Easter eggs
+    console.log("🎮 Dashboard loaded successfully!");
+    console.log("💡 Try these commands:");
+    console.log("  - addFunLog() - Generate a random fun log");
+    console.log("  - clearLogs() - Clear all logs");
+    console.log("  - toggleLiveMode() - Toggle live feed");
+    console.log("🎪 Happy debugging!");
+    
+    // Initial fun log
+    setTimeout(addFunLog, 1000);
   </script>
 </body>
 </html>
